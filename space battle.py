@@ -37,7 +37,7 @@ class Player(GameSprite):
 win_width = 1200
 win_height = 600
 window = display.set_mode((win_width, win_height))
-back = window.blit('spaceback.png')
+back = 
 spaceship1 = Player('spaceship1.png',0,0,15,10,15)
 spaceship2 = Player('spaceship2.png',1200,600,15,10,15)
 monster1 = GameSprite('moster1.png', 345,600,9,15,10)
