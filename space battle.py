@@ -112,7 +112,10 @@ m2 = GameSprite('marshmn2.png', 1140,350,9,60,90)
 m3 = GameSprite('marshmn3.png', 1140,250,9,60,90)
 m4 = GameSprite('marshmn4.png', 1140,150,9,60,90)
 m5 = GameSprite('marshmn5.png', 1140,50,9,60,90)
+mars = GameSprite('mars.png', 850, 100, 0, 100, 100)
+earth =  GameSprite('earth.png', 200, 100, 0, 100, 100)
 blackhole = GameSprite('black hole.jpg', 400, 0, 0, 350, 300)
+spawnpoint = GameSprite('spawnpoint.png',475, 350, 0, 200,200)
 
 display.set_caption('space battle') 
 #player1 = GameSprite('racket.png',50,100,10,30,120)
@@ -120,7 +123,8 @@ display.set_caption('space battle')
 wall1 = Wall(153, 135, 163, 750, 0, 50, 250)
 wall2 = Wall(153, 135, 163, 350, 0, 50, 250)
 wall3 = Wall(153,135,163, 350, 250, 450, 50)
-
+wall4 = Wall(145, 113, 65, 275, 500, 100,100)
+wall5 = Wall(145, 113, 65, 775, 500, 100,100 )
 walls = []
 walls.append(wall1)
 walls.append(wall2)
@@ -138,7 +142,6 @@ while game:
         elif e.type == KEYDOWN:
             if e.key == K_e:
                 spaceship1.fire()
-        elif e.type == KEYDOWN:
             if e.key == K_m:
                 spaceship2.fire2()
         
@@ -147,9 +150,12 @@ while game:
     #player1.reset()
     window.blit(back,(0,0))
     bullets.update()
+    bullets2.update()
+    bullets2.draw(window)
     bullets.draw(window)
     spaceship1.update_l()
     spaceship2.update_r()
+    spawnpoint.reset()
     spaceship1.reset()
     spaceship2.reset()
     monster1.reset() 
@@ -158,6 +164,8 @@ while game:
     monster4.reset()
     blackhole.reset()
     h1.reset()
+    mars.reset()
+    earth.reset()
     h2.reset()
     h3.reset()
     h4.reset()
@@ -167,16 +175,59 @@ while game:
     m3.reset()
     m4.reset()
     m5.reset()
+    
     wall1.draw_wall()
     wall2.draw_wall()
     wall3.draw_wall()
-   
-  
+    wall4.draw_wall()
+    wall5.draw_wall()
    
     
+    if sprite.spritecollide(spaceship2,bullets,True):
+        spaceship2.rect.x = 475
+        spaceship2.rect.y = 350
+    if sprite.spritecollide(spaceship1,bullets2,True):
+        spaceship1.rect.x = 475
+        spaceship1.rect.y = 350
+    if sprite.collide_rect(spaceship2,mars) or sprite.collide_rect(spaceship1,earth):
+        wall3.rect.x = 435454
+    if sprite.collide_rect(spaceship1,mars):
+        spaceship1.rect.x = 475
+        spaceship1.rect.y = 350
+    if sprite.collide_rect(spaceship2,earth): 
+        spaceship2.rect.x = 475
+        spaceship2.rect.y = 350
+
+    if sprite.collide_rect(spaceship2,h1): 
+        h1.rect.x= spaceship2.rect.x
+        h1.rect.y = spaceship2.rect.y
+
+
+    for b in bullets:
+        if sprite.collide_rect(b,wall4):
+            b.kill()
+        elif sprite.collide_rect(b,wall5):
+            b.kill()
+        
+    for n in bullets2:
+        if sprite.collide_rect(n,wall5):
+            n.kill()
+        elif sprite.collide_rect(n,wall4):
+            n.kill()
+
+
+    if sprite.collide_rect(spaceship1,wall4):
+        spaceship1.rect.right = wall4.rect.left
+    if sprite.collide_rect(spaceship2,wall5):
+        spaceship2.rect.left = wall5.rect.right
    
-   
-   
+
+
+    
+
+    
+
+    
    
     display.update()
     clock.tick(60)
