@@ -1,6 +1,16 @@
 from pygame import *
 '''Необхідні класи'''
  
+
+
+
+font.init()
+#text
+font1 = font.SysFont('Italic',30)
+
+score1 =  0
+score2 =  0 
+s = 'Score  ' + str(score1)+' : ' + str(score2)
 class Wall(sprite.Sprite):
     def __init__(self, color_1, color_2, color_3, wall_x, wall_y, wall_width, wall_height):
         super().__init__()
@@ -96,6 +106,8 @@ win_height = 600
 window = display.set_mode((win_width, win_height))
 back = image.load('spaceback.png')
 spaceship1 = Player('spaceship1.png',100,450,15,100,125)
+win = image.load('win1.png')
+winn2 = image.load('win2.png')
 spaceship2 = Player('spaceship2.png',1000,400,15,150,200)
 monster1 = GameSprite('moster1.png', 345,600,9,15,10)
 monster2 = GameSprite('moster2.png', 582,894,9,15,10)
@@ -115,7 +127,7 @@ m5 = GameSprite('marshmn5.png', 1140,50,9,60,90)
 mars = GameSprite('mars.png', 850, 100, 0, 100, 100)
 earth =  GameSprite('earth.png', 200, 100, 0, 100, 100)
 blackhole = GameSprite('black hole.jpg', 400, 0, 0, 350, 300)
-spawnpoint = GameSprite('spawnpoint.png',475, 350, 0, 200,200)
+spawnpoint = GameSprite('checkpoint.png',475, 350, 0, 200,200)
 
 display.set_caption('space battle') 
 #player1 = GameSprite('racket.png',50,100,10,30,120)
@@ -201,32 +213,144 @@ while game:
     if sprite.collide_rect(spaceship2,h1): 
         h1.rect.x= spaceship2.rect.x
         h1.rect.y = spaceship2.rect.y
+    elif sprite.collide_rect(spaceship2,h2): 
+        h2.rect.x= spaceship2.rect.x
+        h2.rect.y = spaceship2.rect.y
+    elif sprite.collide_rect(spaceship2,h3): 
+        h3.rect.x= spaceship2.rect.x
+        h3.rect.y = spaceship2.rect.y
+    elif sprite.collide_rect(spaceship2,h4): 
+        h4.rect.x= spaceship2.rect.x
+        h4.rect.y = spaceship2.rect.y
+    elif sprite.collide_rect(spaceship2,h5): 
+        h5.rect.x= spaceship2.rect.x
+        h5.rect.y = spaceship2.rect.y
+    if sprite.collide_rect(spaceship1,m1):
+        m1.rect.x = spaceship1.rect.x
+        m1.rect.y = spaceship1.rect.y
+    elif sprite.collide_rect(spaceship1,m2):
+        m2.rect.x = spaceship1.rect.x
+        m2.rect.y = spaceship1.rect.y
+    elif sprite.collide_rect(spaceship1,m3):
+        m3.rect.x = spaceship1.rect.x
+        m3.rect.y = spaceship1.rect.y
+    elif sprite.collide_rect(spaceship1,m4):
+        m4.rect.x = spaceship1.rect.x
+        m4.rect.y = spaceship1.rect.y
+    elif sprite.collide_rect(spaceship1,m5):
+        m5.rect.x = spaceship1.rect.x
+        m5.rect.y = spaceship1.rect.y
 
+    
+    
 
     for b in bullets:
         if sprite.collide_rect(b,wall4):
             b.kill()
         elif sprite.collide_rect(b,wall5):
             b.kill()
+    for b in bullets:
+        if sprite.collide_rect(b,wall1):
+            b.kill()
+        elif sprite.collide_rect(b,wall2):
+            b.kill()
+        elif sprite.collide_rect(b,wall3):
+            b.kill()
+    
         
     for n in bullets2:
         if sprite.collide_rect(n,wall5):
             n.kill()
         elif sprite.collide_rect(n,wall4):
             n.kill()
+    for n in bullets2:
+        if sprite.collide_rect(n,wall1):
+            n.kill()
+        elif sprite.collide_rect(n,wall2):
+            n.kill()
+        elif sprite.collide_rect(n,wall3):
+            n.kill()
+       
+        
 
 
     if sprite.collide_rect(spaceship1,wall4):
         spaceship1.rect.right = wall4.rect.left
     if sprite.collide_rect(spaceship2,wall5):
         spaceship2.rect.left = wall5.rect.right
-   
+    
+    if sprite.collide_rect(blackhole, h1):
+        h1.rect.x = 378945
+        h1.rect.y = 47832
+        score2 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, h2):
+        h2.rect.x = 378945
+        h2.rect.y = 47832
+        score2 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, h3):
+        h3.rect.x = 378945
+        h3.rect.y = 47832
+        score2 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, h4):
+        h4.rect.x = 378945
+        h4.rect.y = 47832
+        score2 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, h5):
+        h5.rect.x = 378945
+        h5.rect.y = 47832
+        score2 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, m1):
+        m1.rect.x = 378945
+        m1.rect.y = 47832
+        score1 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, m2):
+        m2.rect.x = 378945
+        m2.rect.y = 47832
+        score1 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, m3):
+        m3.rect.x = 378945
+        m3.rect.y = 47832
+        score1 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, m4):
+        m4.rect.x = 378945
+        m4.rect.y = 47832
+        score1 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
+    if sprite.collide_rect(blackhole, m5):
+        m5.rect.x = 378945
+        m5.rect.y = 47832
+        score1 += 1
+        s = 'Score  ' + str(score1)+' : ' + str(score2)
 
+     
+    if score1 == 5:
+        spaceship2.rect.x = 378942
+        spaceship2.rect.y = 389722
+        game = False
+        
+    if score2 == 5:
+        spaceship1.rect.x = 378942
+        spaceship1.rect.y = 389722
+        game = False
+        
+        
+       
+          
+
+
+    text = font1.render(s,True,(255,255,255))
+    window.blit(text,(100,100))
 
     
-
-    
-
+  
     
    
     display.update()
