@@ -1,13 +1,18 @@
 from pygame import *
+
 '''Необхідні класи'''
- 
+font.init() 
+init()
+
+counter, text0 = 4, '3'.rjust(3)
+time.set_timer(USEREVENT, 1000)
 
 
 
-font.init()
+
 #text
 font1 = font.SysFont('Italic',30)
-
+font2 = font.SysFont('ComicSans', 100)
 score1 =  0
 score2 =  0 
 s = 'Score  ' + str(score1)+' : ' + str(score2)
@@ -132,9 +137,9 @@ spawnpoint = GameSprite('checkpoint.png',475, 350, 0, 200,200)
 display.set_caption('space battle') 
 #player1 = GameSprite('racket.png',50,100,10,30,120)
 #walls
-wall1 = Wall(153, 135, 163, 750, 0, 50, 250)
-wall2 = Wall(153, 135, 163, 350, 0, 50, 250)
-wall3 = Wall(153,135,163, 350, 250, 450, 50)
+wall1 = Wall(4, 39, 51, 750, 0, 50, 250)
+wall2 = Wall(4, 39, 51, 350, 0, 50, 250)
+wall3 = Wall(4, 39, 51, 350, 250, 450, 50)
 wall4 = Wall(145, 113, 65, 275, 500, 100,100)
 wall5 = Wall(145, 113, 65, 775, 500, 100,100 )
 walls = []
@@ -145,10 +150,13 @@ walls.append(wall3)
 #прапорці, що відповідають за стан гри
 game = True
 clock = time.Clock()
-
+see = False
 
 while game:
     for e in event.get():
+        if e.type == USEREVENT: 
+            counter -= 1
+            text0 = str(counter).rjust(3) if counter > 0 else ' '
         if e.type == QUIT:
             game = False
         elif e.type == KEYDOWN:
@@ -203,6 +211,8 @@ while game:
         spaceship1.rect.y = 350
     if sprite.collide_rect(spaceship2,mars) or sprite.collide_rect(spaceship1,earth):
         wall3.rect.x = 435454
+        counter = 4
+        see = True
     if sprite.collide_rect(spaceship1,mars):
         spaceship1.rect.x = 475
         spaceship1.rect.y = 350
@@ -334,12 +344,12 @@ while game:
     if score1 == 5:
         spaceship2.rect.x = 378942
         spaceship2.rect.y = 389722
-        game = False
+        window.blit(text2,(300,300))
         
     if score2 == 5:
         spaceship1.rect.x = 378942
         spaceship1.rect.y = 389722
-        game = False
+        window.blit(text3,(300,300))
         
         
        
@@ -347,8 +357,20 @@ while game:
 
 
     text = font1.render(s,True,(255,255,255))
+    text2 = font2.render('player1 won',True,(255,255,255))
+    text3 = font2.render('player2 won', True,(255,255,255))
     window.blit(text,(100,100))
-
+    
+    
+    if counter == 0:
+        see = False
+        wall3.rect.x = 350
+        wall3.rect.y = 250
+    if see:
+        window.blit(font1.render(text0, True, (255,255,255)), (550,250))
+    
+    
+    
     
   
     
